@@ -1,197 +1,179 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://assets/images/burger-bar.png" type="Texture" id=1]
+[ext_resource path="res://scripts/RobotController.gd" type="Script" id=1]
 [ext_resource path="res://gui_theme.tres" type="Theme" id=2]
 [ext_resource path="res://assets/images/table_texture.png" type="Texture" id=3]
+[ext_resource path="res://assets/font/font_24_white.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/images/logo.svg" type="Texture" id=5]
+[ext_resource path="res://scenes/GUIContainer.gd" type="Script" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0313726, 0.0156863, 0.164706, 1 )
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.12001, 0.0861053, 0.408203, 1 )
-corner_radius_top_right = 30
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.0560086, 0.0336456, 0.246094, 1 )
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.0784314, 0.0509804, 0.294118, 1 )
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-
-[sub_resource type="StyleBoxFlat" id=7]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0.0352941, 0.0156863, 0.113725, 1 )
-corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxEmpty" id=8]
+[sub_resource type="DynamicFontData" id=31]
+font_path = "res://assets/font/SF TransRobotics.ttf"
 
-[sub_resource type="StyleBoxFlat" id=9]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0.117647, 0.0666667, 0.313726, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="DynamicFont" id=32]
+size = 24
+font_data = SubResource( 31 )
 
-[sub_resource type="StyleBoxFlat" id=10]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0.054902, 0.0235294, 0.172549, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=11]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0.0561727, 0.0241699, 0.171875, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxEmpty" id=12]
-
-[sub_resource type="StyleBoxFlat" id=13]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0.0235294, 0, 0.117647, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0.121569, 0.0784314, 0.290196, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=14]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0, 0, 0, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0.121569, 0.0784314, 0.290196, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id=15]
-bg_color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
-border_color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxEmpty" id=16]
-
-[sub_resource type="StyleBoxFlat" id=17]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 5.0
-content_margin_bottom = 5.0
-bg_color = Color( 0.0235294, 0, 0.117647, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0.121569, 0.0784314, 0.290196, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="Theme" id=18]
-Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
-Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
-Button/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
-Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
-Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
-Button/constants/hseparation = 2
-Button/fonts/font = null
-Button/styles/disabled = SubResource( 7 )
-Button/styles/focus = SubResource( 8 )
-Button/styles/hover = SubResource( 9 )
-Button/styles/normal = SubResource( 10 )
-Button/styles/pressed = SubResource( 11 )
-LineEdit/styles/focus = SubResource( 12 )
-LineEdit/styles/normal = SubResource( 13 )
-LineEdit/styles/read_only = SubResource( 14 )
-Panel/styles/panel = SubResource( 15 )
-TextEdit/colors/background_color = Color( 0, 0, 0, 0 )
-TextEdit/colors/bookmark_color = Color( 0.08, 0.49, 0.98, 1 )
-TextEdit/colors/brace_mismatch_color = Color( 1, 0.2, 0.2, 1 )
-TextEdit/colors/breakpoint_color = Color( 0.8, 0.8, 0.4, 0.2 )
-TextEdit/colors/caret_background_color = Color( 0, 0, 0, 1 )
-TextEdit/colors/caret_color = Color( 0.88, 0.88, 0.88, 1 )
-TextEdit/colors/code_folding_color = Color( 0.8, 0.8, 0.8, 0.8 )
-TextEdit/colors/completion_background_color = Color( 0.17, 0.16, 0.2, 1 )
-TextEdit/colors/completion_existing_color = Color( 0.87, 0.87, 0.87, 0.13 )
-TextEdit/colors/completion_font_color = Color( 0.67, 0.67, 0.67, 1 )
-TextEdit/colors/completion_scroll_color = Color( 1, 1, 1, 1 )
-TextEdit/colors/completion_selected_color = Color( 0.26, 0.26, 0.27, 1 )
-TextEdit/colors/current_line_color = Color( 0.25, 0.25, 0.26, 0.8 )
-TextEdit/colors/executing_line_color = Color( 0.2, 0.8, 0.2, 0.4 )
-TextEdit/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
-TextEdit/colors/font_color_readonly = Color( 0.88, 0.88, 0.88, 0.5 )
-TextEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
-TextEdit/colors/function_color = Color( 0.4, 0.64, 0.81, 1 )
-TextEdit/colors/line_number_color = Color( 0.67, 0.67, 0.67, 0.4 )
-TextEdit/colors/mark_color = Color( 1, 0.4, 0.4, 0.4 )
-TextEdit/colors/member_variable_color = Color( 0.9, 0.31, 0.35, 1 )
-TextEdit/colors/number_color = Color( 0.92, 0.58, 0.2, 1 )
-TextEdit/colors/safe_line_number_color = Color( 0.67, 0.78, 0.67, 0.6 )
-TextEdit/colors/selection_color = Color( 0.49, 0.49, 0.49, 1 )
-TextEdit/colors/symbol_color = Color( 0.94, 0.94, 0.94, 1 )
-TextEdit/colors/word_highlighted_color = Color( 0.8, 0.9, 0.9, 0.15 )
-TextEdit/constants/completion_lines = 7
-TextEdit/constants/completion_max_width = 50
-TextEdit/constants/completion_scroll_width = 3
-TextEdit/constants/line_spacing = 4
-TextEdit/fonts/font = null
-TextEdit/icons/fold = null
-TextEdit/icons/folded = null
-TextEdit/icons/space = null
-TextEdit/icons/tab = null
-TextEdit/styles/completion = null
-TextEdit/styles/focus = SubResource( 16 )
-TextEdit/styles/normal = SubResource( 17 )
-TextEdit/styles/read_only = null
+[sub_resource type="DynamicFont" id=33]
+size = 18
+font_data = SubResource( 31 )
 
 [sub_resource type="StyleBoxFlat" id=19]
 bg_color = Color( 0.0313726, 0.0156863, 0.164706, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 
+[sub_resource type="StyleBoxFlat" id=20]
+bg_color = Color( 0.0236765, 0.013422, 0.11084, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
+[sub_resource type="StyleBoxFlat" id=23]
+bg_color = Color( 0, 0.603922, 0.0196078, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.0901961, 0.0705882, 0.282353, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Animation" id=24]
+resource_name = "OpenPanelLeft"
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8.5, 115 ), Vector2( 8.5, -42 ) ]
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "PanelLeftPreOpen"
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 2.37842 ),
+"update": 0,
+"values": [ Vector2( 8.5, 115 ), Vector2( 8.5, 16 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8.5, 8 ) ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "OpenPanelRight"
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/RightPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 638.5, 115 ), Vector2( 638.5, -42 ) ]
+}
+
+[sub_resource type="Animation" id=26]
+resource_name = "PanelLeftPreOpen"
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 2.37842 ),
+"update": 0,
+"values": [ Vector2( 8.5, 115 ), Vector2( 8.5, 16 ) ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "PanelRightPreOpen"
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/RightPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 2.37842 ),
+"update": 0,
+"values": [ Vector2( 638.5, 115 ), Vector2( 638.5, 16 ) ]
+}
+
+[sub_resource type="Animation" id=28]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8.5, 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("GUIContainer/VBoxContainer/BottomBar/RightPanel:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 638.5, 115 ) ]
+}
+
+[sub_resource type="DynamicFontData" id=29]
+font_path = "res://assets/font/SF TransRobotics.ttf"
+
+[sub_resource type="DynamicFont" id=30]
+size = 21
+use_filter = true
+font_data = SubResource( 29 )
+
 [node name="Root" type="Node"]
+
+[node name="RobotController" type="Node" parent="."]
+script = ExtResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -199,6 +181,7 @@ corner_radius_top_right = 10
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -208,102 +191,349 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="SideBar" type="Panel" parent="CanvasLayer/GUIContainer/HBoxContainer"]
-margin_right = 70.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 70, 0 )
+[node name="LeftSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
+anchor_bottom = 0.734
+margin_top = 13.0
+margin_right = 199.0
+margin_bottom = 1.59998
 rect_clip_content = true
+size_flags_horizontal = 3
+
+[node name="SideBar" type="Panel" parent="CanvasLayer/GUIContainer/LeftSide"]
+margin_right = 199.0
+margin_bottom = 429.0
+rect_min_size = Vector2( 150, 0 )
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/LeftSide/SideBar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
 rect_clip_content = true
 
-[node name="top_container" type="VBoxContainer" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer"]
-margin_right = 70.0
-margin_bottom = 596.0
-rect_clip_content = true
-size_flags_vertical = 3
-custom_constants/separation = 0
-
-[node name="ToggleButton" type="Control" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer/top_container"]
-margin_right = 70.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 40, 50 )
-rect_clip_content = true
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer/top_container/ToggleButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_clip_content = true
-custom_styles/panel = SubResource( 2 )
-
-[node name="Button" type="Button" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer/top_container/ToggleButton"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/hseparation = 6
-custom_styles/hover = SubResource( 3 )
-custom_styles/pressed = SubResource( 4 )
-custom_styles/focus = SubResource( 4 )
-toggle_mode = true
-text = "Close"
-icon = ExtResource( 1 )
-flat = true
+[node name="BtnAlignPiccolo" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
+margin_right = 189.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = SubResource( 32 )
+text = "ALIGN"
 clip_text = true
-align = 0
-expand_icon = true
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer/top_container/ToggleButton"]
+[node name="BtnEnableStarter" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
+margin_top = 64.0
+margin_right = 189.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = SubResource( 33 )
+text = "ENABLE STARTER"
+
+[node name="BtnDisableStarter" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
+margin_top = 128.0
+margin_right = 189.0
+margin_bottom = 178.0
+rect_min_size = Vector2( 0, 50 )
+custom_fonts/font = SubResource( 33 )
+text = "DISABLE STARTER"
+
+[node name="RightSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -199.0
+margin_top = 13.0
+margin_bottom = 442.0
+rect_clip_content = true
+size_flags_horizontal = 3
+
+[node name="SideBar" type="Panel" parent="CanvasLayer/GUIContainer/RightSide"]
+margin_right = 199.0
+margin_bottom = 429.0
+rect_min_size = Vector2( 150, 0 )
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/RightSide/SideBar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 18 )
-
-[node name="Burger-bar" type="Sprite" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer/top_container/ToggleButton/CenterContainer"]
-position = Vector2( 35, 27 )
-scale = Vector2( 0.0546875, 0.0546875 )
-texture = ExtResource( 1 )
-
-[node name="bottom_container" type="VBoxContainer" parent="CanvasLayer/GUIContainer/HBoxContainer/SideBar/VBoxContainer"]
-margin_top = 600.0
-margin_right = 70.0
-margin_bottom = 600.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
 rect_clip_content = true
+
+[node name="BtnAlignPiccolo" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
+margin_right = 189.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = SubResource( 32 )
+text = "ALIGN"
+clip_text = true
+
+[node name="BtnEnableStarter" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
+margin_top = 64.0
+margin_right = 189.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = SubResource( 33 )
+text = "ENABLE STARTER"
+
+[node name="BtnDisableStarter" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
+margin_top = 128.0
+margin_right = 189.0
+margin_bottom = 178.0
+rect_min_size = Vector2( 0, 50 )
+custom_fonts/font = SubResource( 33 )
+text = "DISABLE STARTER"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer"]
 anchor_left = 0.01
 anchor_top = 1.0
 anchor_right = 0.99
 anchor_bottom = 1.0
-margin_top = -70.0
-rect_clip_content = true
+margin_top = -95.0
+margin_bottom = -25.0
 alignment = 1
 
 [node name="BottomBar" type="Panel" parent="CanvasLayer/GUIContainer/VBoxContainer"]
 margin_right = 1003.0
-margin_bottom = 70.0
-rect_min_size = Vector2( 0, 70 )
-rect_clip_content = true
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
 theme = ExtResource( 2 )
 custom_styles/panel = SubResource( 19 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="LeftPanel" type="Panel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+anchor_left = 0.008
+anchor_top = 0.941
+anchor_right = 0.357
+anchor_bottom = 0.941
+margin_left = 0.476
+margin_top = -86.1
+margin_right = 0.428986
+margin_bottom = 213.9
+rect_min_size = Vector2( 350, 300 )
+rect_clip_content = true
+custom_styles/panel = SubResource( 20 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 15.0
+margin_right = -15.0
+margin_bottom = -15.0
+
+[node name="Title" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 4 )
+text = "Connecting to the Piccolo (192.168.70.110)"
+align = 1
+
+[node name="ChangeIpPiccolo" type="Button" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_top = 19.0
+margin_right = 320.0
+margin_bottom = 59.0
+rect_min_size = Vector2( 0, 40 )
+custom_fonts/font = ExtResource( 4 )
+text = "Change IP Address"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_top = 63.0
+margin_right = 320.0
+margin_bottom = 67.0
+
+[node name="Position" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_top = 71.0
+margin_right = 320.0
+margin_bottom = 104.0
+custom_fonts/font = ExtResource( 4 )
+text = "Position
+(X: 99999, Y: 99999)"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_top = 108.0
+margin_right = 320.0
+margin_bottom = 112.0
+
+[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_top = 116.0
+margin_right = 320.0
+margin_bottom = 131.0
+custom_fonts/font = ExtResource( 4 )
+text = "Battery:"
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+margin_top = 135.0
+margin_right = 320.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 4 )
+custom_styles/fg = SubResource( 23 )
+step = 1.0
+value = 50.0
+rounded = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel"]
+root_node = NodePath("../../../../..")
+autoplay = "PanelLeftPreOpen"
+anims/OpenPanelLeft = SubResource( 24 )
+anims/PanelLeftPreOpen = SubResource( 21 )
+anims/RESET = SubResource( 22 )
+
+[node name="RightPanel" type="Panel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+anchor_left = 0.635119
+anchor_top = 0.941
+anchor_right = 0.984119
+anchor_bottom = 0.941
+margin_left = 1.47601
+margin_top = 20.9
+margin_right = 1.42896
+margin_bottom = 320.9
+rect_min_size = Vector2( 350, 300 )
+rect_clip_content = true
+custom_styles/panel = SubResource( 20 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 15.0
+margin_right = -15.0
+margin_bottom = -15.0
+
+[node name="Title" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 4 )
+text = "Connecting to the Grande (192.168.70.110)"
+align = 1
+
+[node name="ChangeIpGrande" type="Button" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_top = 19.0
+margin_right = 320.0
+margin_bottom = 59.0
+rect_min_size = Vector2( 0, 40 )
+custom_fonts/font = ExtResource( 4 )
+text = "Change IP Address"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_top = 63.0
+margin_right = 320.0
+margin_bottom = 67.0
+
+[node name="Position" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_top = 71.0
+margin_right = 320.0
+margin_bottom = 104.0
+custom_fonts/font = ExtResource( 4 )
+text = "Position
+(X: 99999, Y: 99999)"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_top = 108.0
+margin_right = 320.0
+margin_bottom = 112.0
+
+[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_top = 116.0
+margin_right = 320.0
+margin_bottom = 131.0
+custom_fonts/font = ExtResource( 4 )
+text = "Battery:"
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+margin_top = 135.0
+margin_right = 320.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 4 )
+custom_styles/fg = SubResource( 23 )
+step = 1.0
+value = 50.0
+rounded = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel"]
+root_node = NodePath("../../../../..")
+autoplay = "PanelRightPreOpen"
+anims/OpenPanelRight = SubResource( 25 )
+anims/PanelLeftPreOpen = SubResource( 26 )
+anims/PanelRightPreOpen = SubResource( 27 )
+anims/RESET = SubResource( 28 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -64.0
+margin_top = -177.0
+margin_right = 78.0
+margin_bottom = -38.0
+rect_clip_content = true
+texture = ExtResource( 5 )
+expand = true
+
+[node name="BtnChangeColor" type="Button" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -100.0
+margin_top = -73.0
+margin_right = 100.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 200, 80 )
+custom_fonts/font = ExtResource( 4 )
+text = "Change Team Color"
+
+[node name="TeamColorLabel" type="RichTextLabel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+anchor_left = 0.403
+anchor_right = 0.403
+margin_left = -194.209
+margin_top = -73.0
+margin_right = -0.209015
+margin_bottom = -49.0
+custom_fonts/normal_font = SubResource( 30 )
+bbcode_enabled = true
+bbcode_text = "[center]Team Color: [color=yellow]Yellow[/color][/center]"
+text = "Team Color: Yellow"
+scroll_active = false
+
+[node name="TeamColorLabel2" type="RichTextLabel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+anchor_left = 0.598
+anchor_right = 0.598
+margin_left = -5.79407
+margin_top = -73.0
+margin_right = 188.206
+margin_bottom = -49.0
+custom_fonts/normal_font = SubResource( 30 )
+bbcode_enabled = true
+bbcode_text = "[center]Team Color: [color=purple]Purple[/color][/center]"
+text = "Team Color: Purple"
+scroll_active = false
 
 [node name="MarginContainer" type="CenterContainer" parent="CanvasLayer/GUIContainer"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -300.0
-margin_top = 30.0
+margin_top = 17.0
 margin_right = 300.0
-margin_bottom = 430.0
+margin_bottom = 417.0
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/GUIContainer/MarginContainer"]
 margin_right = 600.0
@@ -311,3 +541,77 @@ margin_bottom = 400.0
 rect_min_size = Vector2( 600, 400 )
 texture = ExtResource( 3 )
 expand = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GUIContainer/MarginContainer"]
+margin_right = 20.0
+margin_bottom = 20.0
+color = Color( 1, 0, 0, 1 )
+
+[node name="ChangeIPView" type="Control" parent="CanvasLayer/GUIContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Bg" type="ColorRect" parent="CanvasLayer/GUIContainer/ChangeIPView"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.792157 )
+
+[node name="Panel" type="Panel" parent="CanvasLayer/GUIContainer/ChangeIPView"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -184.0
+margin_top = -62.0
+margin_right = 184.0
+margin_bottom = 62.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/ChangeIPView/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 11
+
+[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer"]
+margin_right = 348.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 4 )
+text = "Change IP Address"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer"]
+margin_top = 26.0
+margin_right = 348.0
+margin_bottom = 30.0
+
+[node name="Input" type="LineEdit" parent="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer"]
+margin_top = 41.0
+margin_right = 348.0
+margin_bottom = 67.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer"]
+margin_top = 78.0
+margin_right = 348.0
+margin_bottom = 105.0
+alignment = 2
+
+[node name="SaveIpButton" type="Button" parent="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 299.0
+margin_right = 348.0
+margin_bottom = 27.0
+custom_fonts/font = ExtResource( 4 )
+text = "Save"
+
+[connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnAlignPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnAlignPiccolo_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo" to="CanvasLayer/GUIContainer" method="_on_ChangeIpPiccolo_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande" to="CanvasLayer/GUIContainer" method="_on_ChangeIpGrande_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/BtnChangeColor" to="CanvasLayer/GUIContainer" method="_on_BtnChangeColor_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer/HBoxContainer/SaveIpButton" to="CanvasLayer/GUIContainer" method="_on_SaveIpButton_pressed"]
