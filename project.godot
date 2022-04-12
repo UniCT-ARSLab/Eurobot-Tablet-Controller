@@ -22,6 +22,7 @@ _global_script_class_icons={
 
 config/name="EurobotTabletController"
 run/main_scene="res://scenes/main.tscn"
+boot_splash/bg_color=Color( 0.0745098, 0.0313726, 0.231373, 1 )
 config/icon="res://icon.png"
 
 [display]
@@ -35,4 +36,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0.0745098, 0.0313726, 0.231373, 1 )
 environment/default_environment="res://default_env.tres"

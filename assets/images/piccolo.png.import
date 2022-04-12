@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/logo_team.svg-038aa1720ef025a2da37e84d8ebe7aeb.stex"
+path="res://.import/piccolo.png-b9e32a90ed4880b7cb31a4cc61832a1b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/logo_team.svg"
-dest_files=[ "res://.import/logo_team.svg-038aa1720ef025a2da37e84d8ebe7aeb.stex" ]
+source_file="res://assets/images/piccolo.png"
+dest_files=[ "res://.import/piccolo.png-b9e32a90ed4880b7cb31a4cc61832a1b.stex" ]
 
 [params]
 

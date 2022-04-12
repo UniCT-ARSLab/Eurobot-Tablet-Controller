@@ -1,11 +1,12 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://scripts/RobotController.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/piccolo.png" type="Texture" id=1]
 [ext_resource path="res://gui_theme.tres" type="Theme" id=2]
 [ext_resource path="res://assets/images/table_texture.png" type="Texture" id=3]
 [ext_resource path="res://assets/font/font_24_white.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/images/logo.svg" type="Texture" id=5]
 [ext_resource path="res://scenes/GUIContainer.gd" type="Script" id=6]
+[ext_resource path="res://assets/images/grande.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0313726, 0.0156863, 0.164706, 1 )
@@ -172,9 +173,6 @@ font_data = SubResource( 29 )
 
 [node name="Root" type="Node"]
 
-[node name="RobotController" type="Node" parent="."]
-script = ExtResource( 1 )
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GUIContainer" type="Control" parent="CanvasLayer"]
@@ -192,6 +190,7 @@ anchor_bottom = 1.0
 color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
 
 [node name="LeftSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
+visible = false
 anchor_bottom = 0.734
 margin_top = 13.0
 margin_right = 199.0
@@ -316,7 +315,7 @@ anchor_right = 0.357
 anchor_bottom = 0.941
 margin_left = 0.476
 margin_top = -86.1
-margin_right = 0.428986
+margin_right = 0.429016
 margin_bottom = 213.9
 rect_min_size = Vector2( 350, 300 )
 rect_clip_content = true
@@ -332,6 +331,7 @@ margin_left = 15.0
 margin_top = 15.0
 margin_right = -15.0
 margin_bottom = -15.0
+rect_clip_content = true
 
 [node name="Title" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_right = 320.0
@@ -359,7 +359,7 @@ margin_right = 320.0
 margin_bottom = 104.0
 custom_fonts/font = ExtResource( 4 )
 text = "Position
-(X: 99999, Y: 99999)"
+(X: 0, Y: 0)"
 align = 1
 
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
@@ -396,9 +396,9 @@ anchor_left = 0.635119
 anchor_top = 0.941
 anchor_right = 0.984119
 anchor_bottom = 0.941
-margin_left = 1.47601
+margin_left = 1.47565
 margin_top = 20.9
-margin_right = 1.42896
+margin_right = 1.42865
 margin_bottom = 320.9
 rect_min_size = Vector2( 350, 300 )
 rect_clip_content = true
@@ -442,7 +442,7 @@ margin_right = 320.0
 margin_bottom = 104.0
 custom_fonts/font = ExtResource( 4 )
 text = "Position
-(X: 99999, Y: 99999)"
+(X: 0, Y: 0)"
 align = 1
 
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
@@ -527,25 +527,47 @@ bbcode_text = "[center]Team Color: [color=purple]Purple[/color][/center]"
 text = "Team Color: Purple"
 scroll_active = false
 
-[node name="MarginContainer" type="CenterContainer" parent="CanvasLayer/GUIContainer"]
+[node name="Minimap" type="CenterContainer" parent="CanvasLayer/GUIContainer"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -300.0
-margin_top = 17.0
-margin_right = 300.0
-margin_bottom = 417.0
+margin_top = 11.0
+margin_right = 310.0
+margin_bottom = 421.0
+rect_clip_content = true
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GUIContainer/MarginContainer"]
-margin_right = 600.0
-margin_bottom = 400.0
+[node name="Border" type="ColorRect" parent="CanvasLayer/GUIContainer/Minimap"]
+margin_right = 610.0
+margin_bottom = 410.0
+rect_min_size = Vector2( 610, 410 )
+color = Color( 0.153739, 0.131958, 0.367188, 1 )
+
+[node name="Map" type="TextureRect" parent="CanvasLayer/GUIContainer/Minimap"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 605.0
+margin_bottom = 405.0
 rect_min_size = Vector2( 600, 400 )
 texture = ExtResource( 3 )
 expand = true
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GUIContainer/MarginContainer"]
-margin_right = 20.0
-margin_bottom = 20.0
-color = Color( 1, 0, 0, 1 )
+[node name="PiccoloNav" type="TextureRect" parent="CanvasLayer/GUIContainer/Minimap/Map"]
+visible = false
+margin_right = 40.0
+margin_bottom = 54.0
+rect_min_size = Vector2( 40, 54 )
+rect_pivot_offset = Vector2( 20, 27 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="GrandeNav" type="TextureRect" parent="CanvasLayer/GUIContainer/Minimap/Map"]
+visible = false
+margin_right = 53.9
+margin_bottom = 64.0
+rect_min_size = Vector2( 53.9, 64 )
+rect_pivot_offset = Vector2( 26.95, 32 )
+texture = ExtResource( 7 )
+expand = true
 
 [node name="ChangeIPView" type="Control" parent="CanvasLayer/GUIContainer"]
 visible = false

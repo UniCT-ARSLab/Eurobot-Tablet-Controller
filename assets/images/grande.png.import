@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/UniCT_Team_Logo.svg-981baf4ca667a7b5f26ae468d849edc7.stex"
+path="res://.import/grande.png-7ff6df7a5be70cd658d510ae2e2dc046.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/UniCT_Team_Logo.svg"
-dest_files=[ "res://.import/UniCT_Team_Logo.svg-981baf4ca667a7b5f26ae468d849edc7.stex" ]
+source_file="res://assets/images/grande.png"
+dest_files=[ "res://.import/grande.png-7ff6df7a5be70cd658d510ae2e2dc046.stex" ]
 
 [params]
 

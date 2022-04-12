@@ -14,11 +14,16 @@ onready var labelRobotPiccolo = $VBoxContainer/BottomBar/LeftPanel/VBoxContainer
 onready var labelRobotGrande = $VBoxContainer/BottomBar/RightPanel/VBoxContainer/Title
 
 onready var labelPositionPiccolo = $VBoxContainer/BottomBar/LeftPanel/VBoxContainer/Position
+onready var labelPositionGrande = $VBoxContainer/BottomBar/RightPanel/VBoxContainer/Position
 
 #changeIpWindow
 onready var changeIpWindow = $ChangeIPView
 onready var inputIp = $ChangeIPView/Panel/VBoxContainer/Input
 
+
+#robots
+onready var robotPiccolo = $Minimap/Map/PiccoloNav
+onready var robotGrande = $Minimap/Map/GrandeNav
 
 #webSockets
 
@@ -29,9 +34,11 @@ var portGrande = 9998
 
 
 var wsPiccoloConnected = false
+var wsGrandeConnected = false
 
-var scalePosizion = 1000
+var scalePosition = .2
 var posPiccolo = Vector3()
+var posGrande = Vector3()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,16 +47,24 @@ func _ready():
 	labelRobotPiccolo.text="Connecting to Piccolo ("+IP_PICCOLO+")"
 	labelRobotGrande.text="Connecting to Grande ("+IP_GRANDE+")"
 
-	connectSocketPiccolo()
+
 	changeIpWindow.visible = false
+	robotPiccolo.visible = false
+	robotGrande.visible = false
+	
+	connectSocketPiccolo()
+	connectSocketGrande()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if wsPiccolo:
 		wsPiccolo.poll()
-	if wsGrande and wsGrande.get_connected_host():
+	if wsGrande:
 		wsGrande.poll()
-#	pass
+	
+	robotPiccolo.rect_position = robotPiccolo.rect_position.linear_interpolate(Vector2(posPiccolo.x, posPiccolo.y), .5)
+	robotGrande.rect_position = robotGrande.rect_position.linear_interpolate(Vector2(posGrande.x, posGrande.y), .5)
+	#robotPiccolo.rect_rotation = lerp(robotPiccolo.rect_rotation, posPiccolo.z, delta*200)
 
 
 func connectSocketPiccolo(port=""):
@@ -77,7 +92,6 @@ func connectSocketPiccolo(port=""):
 		yield(get_tree().create_timer(1.5), "timeout")
 		connectSocketPiccolo(port)
 	
-	
 func _wsPiccoloClosed(was_clean = false):
 	wsPiccolo = null
 	labelRobotPiccolo.text="Connecting to Piccolo ("+IP_PICCOLO+")"
@@ -86,32 +100,96 @@ func _wsPiccoloClosed(was_clean = false):
 	wsPiccoloConnected = false
 	$VBoxContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo.visible = true
 	$LeftSide.visible = false
+	robotPiccolo.visible = false
 	yield(get_tree().create_timer(1.5), "timeout")
 	connectSocketPiccolo()
 
-	
 func _wsPiccoloConnected(proto = ""):
 	wsPiccoloConnected = true
 	labelRobotPiccolo.text="Piccolo Connected ("+IP_PICCOLO+")"
+	robotPiccolo.visible = true
 	$VBoxContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo.visible = false
 	$LeftSide.visible = true
 	
 	$VBoxContainer/BottomBar/LeftPanel/AnimationPlayer.play("OpenPanelLeft")
 	wsPiccolo.get_peer(1).put_packet("Test packet".to_utf8())
 
-
 func _wsPiccoloOnData():
 	var jsonResult = JSON.parse(wsPiccolo.get_peer(1).get_packet().get_string_from_utf8())
 	if jsonResult.error == OK :
+		
 		var jsonData = jsonResult.result
 		if  jsonData["command"] == "position":
 			posPiccolo.z = deg2rad(jsonData["data"]["Angle"] ) 
-			posPiccolo.x = jsonData["data"]["X"]/scalePosizion
-			posPiccolo.y = -jsonData["data"]["Y"]/scalePosizion
-			labelPositionPiccolo.text="Position:\n (X:"+str(jsonData["data"]["X"])+", Y:"+str(jsonData["data"]["Y"])+", A:"+str(jsonData["data"]["Angle"])+")"
+			posPiccolo.x = jsonData["data"]["X"] * scalePosition
+			posPiccolo.y = jsonData["data"]["Y"] * scalePosition
+			labelPositionPiccolo.text="Position:\n (X:"+str(posPiccolo.x)+", Y:"+str(posPiccolo.y)+", A:"+str(posPiccolo.z)+")"
+			
 		elif jsonData["command"] == "battery":
 			print("Aggiorno batteria");
 			#batteryBar.set_bar_value(int(jsonData["data"]["percent"]))
+
+func connectSocketGrande(port=""):
+	
+	wsGrande = WebSocketClient.new()
+	wsGrande.verify_ssl = false
+	wsGrande.connect("connection_closed", self, "_wsGrandeClosed")
+	wsGrande.connect("connection_error", self, "_wsGrandeClosed")
+	wsGrande.connect("connection_established", self, "_wsGrandeConnected")
+	wsGrande.connect("data_received", self, "_wsGrandeOnData")
+	
+	labelRobotGrande.text="Connecting to Grande ("+IP_GRANDE+")"
+	
+	if port.length() == 0:
+		port = 9998
+	portGrande = port
+	var url = "ws://"+IP_GRANDE+":"+str(port)+"/ws"
+	
+	print("Connecting to Grande ", url)
+	
+	var err = wsGrande.connect_to_url(url)
+	print(err)
+	if err != OK:
+		
+		yield(get_tree().create_timer(1.5), "timeout")
+		connectSocketGrande(port)
+
+func _wsGrandeClosed(was_clean = false):
+	wsGrande = null
+	labelRobotGrande.text="Connecting to Grande ("+IP_GRANDE+")"
+	if wsGrandeConnected:
+		$VBoxContainer/BottomBar/RightPanel/AnimationPlayer.play("PanelRightPreOpen")
+	wsGrandeConnected = false
+	$VBoxContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = true
+	$RightSide.visible = false
+	robotGrande.visible = false
+	yield(get_tree().create_timer(1.5), "timeout")
+	connectSocketPiccolo()
+
+func _wsGrandeConnected(proto = ""):
+	wsGrandeConnected = true
+	labelRobotGrande.text="Grande Connected ("+IP_GRANDE+")"
+	robotGrande.visible = true
+	$VBoxContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = false
+	$RightSide.visible = true
+	$VBoxContainer/BottomBar/RightPanel/AnimationPlayer.play("OpenPanelRight")
+	wsGrande.get_peer(1).put_packet("Test packet".to_utf8())
+
+func _wsGrandeOnData():
+	var jsonResult = JSON.parse(wsGrande.get_peer(1).get_packet().get_string_from_utf8())
+	if jsonResult.error == OK :
+		
+		var jsonData = jsonResult.result
+		if  jsonData["command"] == "position":
+			posGrande.z = deg2rad(jsonData["data"]["Angle"] ) 
+			posGrande.x = jsonData["data"]["X"] * scalePosition
+			posGrande.y = jsonData["data"]["Y"] * scalePosition
+			labelPositionGrande.text="Position:\n (X:"+str(posGrande.x)+", Y:"+str(posGrande.y)+", A:"+str(posGrande.z)+")"
+			
+		elif jsonData["command"] == "battery":
+			print("Aggiorno batteria");
+			#batteryBar.set_bar_value(int(jsonData["data"]["percent"]))
+
 
 func _on_BtnChangeColor_pressed():
 	teamColor = "yellow" if teamColor == "purple" else "purple"
@@ -144,6 +222,7 @@ func _on_SaveIpButton_pressed():
 	else :
 		IP_GRANDE = inputIp.text
 		labelRobotGrande.text="Connecting to Grande ("+IP_GRANDE+")"
+		connectSocketGrande()
 	changeIpWindow.visible = false
 
 
