@@ -70,7 +70,7 @@ func _process(delta):
 func connectSocketPiccolo(port=""):
 	
 	wsPiccolo = WebSocketClient.new()
-	wsPiccolo.verify_ssl = false
+	wsPiccolo.set_verify_ssl_enabled(false)
 	wsPiccolo.connect("connection_closed", self, "_wsPiccoloClosed")
 	wsPiccolo.connect("connection_error", self, "_wsPiccoloClosed")
 	wsPiccolo.connect("connection_established", self, "_wsPiccoloConnected")
@@ -83,10 +83,8 @@ func connectSocketPiccolo(port=""):
 	portPiccolo = port
 	var url = "ws://"+IP_PICCOLO+":"+str(port)+"/ws"
 	
-	print("Connecting to Piccolo ", url)
 	
 	var err = wsPiccolo.connect_to_url(url)
-	print(err)
 	if err != OK:
 		
 		yield(get_tree().create_timer(1.5), "timeout")
@@ -132,7 +130,7 @@ func _wsPiccoloOnData():
 func connectSocketGrande(port=""):
 	
 	wsGrande = WebSocketClient.new()
-	wsGrande.verify_ssl = false
+	wsGrande.set_verify_ssl_enabled(false)
 	wsGrande.connect("connection_closed", self, "_wsGrandeClosed")
 	wsGrande.connect("connection_error", self, "_wsGrandeClosed")
 	wsGrande.connect("connection_established", self, "_wsGrandeConnected")
@@ -145,10 +143,7 @@ func connectSocketGrande(port=""):
 	portGrande = port
 	var url = "ws://"+IP_GRANDE+":"+str(port)+"/ws"
 	
-	print("Connecting to Grande ", url)
-	
 	var err = wsGrande.connect_to_url(url)
-	print(err)
 	if err != OK:
 		
 		yield(get_tree().create_timer(1.5), "timeout")

@@ -8,16 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Node",
-"class": "RobotController",
-"language": "GDScript",
-"path": "res://scripts/RobotController.gd"
-} ]
-_global_script_class_icons={
-"RobotController": ""
-}
-
 [application]
 
 config/name="EurobotTabletController"
