@@ -190,7 +190,6 @@ anchor_bottom = 1.0
 color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
 
 [node name="LeftSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
-visible = false
 anchor_bottom = 0.734
 margin_top = 13.0
 margin_right = 199.0

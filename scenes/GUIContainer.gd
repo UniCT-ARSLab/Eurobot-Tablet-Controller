@@ -62,12 +62,15 @@ func _process(delta):
 	if wsGrande:
 		wsGrande.poll()
 	
+	
+	robotPiccolo.rect_rotation = lerp(robotPiccolo.rect_rotation , posPiccolo.z, delta)
 	robotPiccolo.rect_position = robotPiccolo.rect_position.linear_interpolate(Vector2(posPiccolo.x, posPiccolo.y), .5)
+	robotGrande.rect_rotation = lerp(robotGrande.rect_rotation , posGrande.z, delta)
 	robotGrande.rect_position = robotGrande.rect_position.linear_interpolate(Vector2(posGrande.x, posGrande.y), .5)
-	#robotPiccolo.rect_rotation = lerp(robotPiccolo.rect_rotation, posPiccolo.z, delta*200)
 
 
-func connectSocketPiccolo(port=""):
+
+func connectSocketPiccolo(port=null):
 	
 	wsPiccolo = WebSocketClient.new()
 	wsPiccolo.set_verify_ssl_enabled(false)
@@ -78,7 +81,7 @@ func connectSocketPiccolo(port=""):
 	
 	labelRobotPiccolo.text="Connecting to Piccolo ("+IP_PICCOLO+")"
 	
-	if port.length() == 0:
+	if port == null:
 		port = 9998
 	portPiccolo = port
 	var url = "ws://"+IP_PICCOLO+":"+str(port)+"/ws"
@@ -118,16 +121,16 @@ func _wsPiccoloOnData():
 		
 		var jsonData = jsonResult.result
 		if  jsonData["command"] == "position":
-			posPiccolo.z = deg2rad(jsonData["data"]["Angle"] ) 
+			posPiccolo.z = abs(jsonData["data"]["Angle"] - 180)
 			posPiccolo.x = jsonData["data"]["X"] * scalePosition
-			posPiccolo.y = jsonData["data"]["Y"] * scalePosition
+			posPiccolo.y = 400 - (jsonData["data"]["Y"] * scalePosition)
 			labelPositionPiccolo.text="Position:\n (X:"+str(posPiccolo.x)+", Y:"+str(posPiccolo.y)+", A:"+str(posPiccolo.z)+")"
 			
 		elif jsonData["command"] == "battery":
 			print("Aggiorno batteria");
 			#batteryBar.set_bar_value(int(jsonData["data"]["percent"]))
 
-func connectSocketGrande(port=""):
+func connectSocketGrande(port=null):
 	
 	wsGrande = WebSocketClient.new()
 	wsGrande.set_verify_ssl_enabled(false)
@@ -138,7 +141,7 @@ func connectSocketGrande(port=""):
 	
 	labelRobotGrande.text="Connecting to Grande ("+IP_GRANDE+")"
 	
-	if port.length() == 0:
+	if port == null:
 		port = 9998
 	portGrande = port
 	var url = "ws://"+IP_GRANDE+":"+str(port)+"/ws"
@@ -176,9 +179,11 @@ func _wsGrandeOnData():
 		
 		var jsonData = jsonResult.result
 		if  jsonData["command"] == "position":
-			posGrande.z = deg2rad(jsonData["data"]["Angle"] ) 
+			
+			posGrande.z = abs(jsonData["data"]["Angle"] - 180)
 			posGrande.x = jsonData["data"]["X"] * scalePosition
-			posGrande.y = jsonData["data"]["Y"] * scalePosition
+			posGrande.y = 400 - (jsonData["data"]["Y"] * scalePosition)
+			
 			labelPositionGrande.text="Position:\n (X:"+str(posGrande.x)+", Y:"+str(posGrande.y)+", A:"+str(posGrande.z)+")"
 			
 		elif jsonData["command"] == "battery":
@@ -223,7 +228,7 @@ func _on_SaveIpButton_pressed():
 
 func _on_BtnAlignPiccolo_pressed():
 	
-	var body = {"color" : 1}
+	var body = {"color" : 1 if teamColor == "yellow" else 0}
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/align", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
