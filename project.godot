@@ -10,9 +10,12 @@ config_version=4
 
 [application]
 
-config/name="EurobotTabletController"
+config/name="Eurobot Robot Controller"
 run/main_scene="res://scenes/main.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://logo.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0.0745098, 0.0313726, 0.231373, 1 )
+config/icon="res://logo.png"
 
 [display]
 

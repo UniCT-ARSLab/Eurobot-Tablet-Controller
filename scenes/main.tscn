@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/images/piccolo.png" type="Texture" id=1]
 [ext_resource path="res://gui_theme.tres" type="Theme" id=2]
@@ -48,119 +48,153 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="Animation" id=24]
 resource_name = "OpenPanelLeft"
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 8.5, 115 ), Vector2( 8.5, -42 ) ]
+"points": PoolRealArray( 8.5, -0.25, 0, 0.25, 0, 8.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
 }
-
-[sub_resource type="Animation" id=21]
-resource_name = "PanelLeftPreOpen"
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 2.37842 ),
-"update": 0,
-"values": [ Vector2( 8.5, 115 ), Vector2( 8.5, 16 ) ]
-}
-
-[sub_resource type="Animation" id=22]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 8.5, 8 ) ]
-}
-
-[sub_resource type="Animation" id=25]
-resource_name = "OpenPanelRight"
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/RightPanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 638.5, 115 ), Vector2( 638.5, -42 ) ]
-}
-
-[sub_resource type="Animation" id=26]
-resource_name = "PanelLeftPreOpen"
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 2.37842 ),
-"update": 0,
-"values": [ Vector2( 8.5, 115 ), Vector2( 8.5, 16 ) ]
-}
-
-[sub_resource type="Animation" id=27]
-resource_name = "PanelRightPreOpen"
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/RightPanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 2.37842 ),
-"update": 0,
-"values": [ Vector2( 638.5, 115 ), Vector2( 638.5, 16 ) ]
-}
-
-[sub_resource type="Animation" id=28]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("GUIContainer/VBoxContainer/BottomBar/LeftPanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 8.5, 8 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("GUIContainer/VBoxContainer/BottomBar/RightPanel:rect_position")
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"points": PoolRealArray( 8, -0.25, 0, 0.25, 0, -50, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "PanelLeftPreOpen"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"points": PoolRealArray( 8.5, -0.25, 0, 0.25, 0, 8.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 106, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 638.5, 115 ) ]
+"values": [ Vector2( 8.5, 17 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 8.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("GUIContainer/BottomBar/LeftPanel:rect_position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 106, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "OpenPanelRight"
+length = 0.549
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("GUIContainer/BottomBar/RightPanel:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"points": PoolRealArray( 644.5, -0.25, 0, 0.25, 0, 644.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("GUIContainer/BottomBar/RightPanel:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 8, -0.25, 0, 0.25, 0, -50, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "PanelRightPreOpen"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("GUIContainer/BottomBar/RightPanel:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"points": PoolRealArray( 644.5, -0.25, 0, 0.25, 0, 644.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("GUIContainer/BottomBar/RightPanel:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 106, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+
+[sub_resource type="Animation" id=28]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("GUIContainer/BottomBar/RightPanel:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"points": PoolRealArray( 644.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("GUIContainer/BottomBar/RightPanel:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 106, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="DynamicFontData" id=29]
@@ -190,6 +224,7 @@ anchor_bottom = 1.0
 color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
 
 [node name="LeftSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
+visible = false
 anchor_bottom = 0.734
 margin_top = 13.0
 margin_right = 199.0
@@ -223,7 +258,7 @@ custom_fonts/font = SubResource( 32 )
 text = "ALIGN"
 clip_text = true
 
-[node name="BtnEnableStarter" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
+[node name="BtnEnableStarterPiccolo" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
 margin_top = 64.0
 margin_right = 189.0
 margin_bottom = 124.0
@@ -231,7 +266,7 @@ rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 33 )
 text = "ENABLE STARTER"
 
-[node name="BtnDisableStarter" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
+[node name="BtnDisableStarterPiccolo" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
 margin_top = 128.0
 margin_right = 189.0
 margin_bottom = 178.0
@@ -267,7 +302,7 @@ margin_right = -5.0
 margin_bottom = -5.0
 rect_clip_content = true
 
-[node name="BtnAlignPiccolo" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
+[node name="BtnAlignGrande" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
 margin_right = 189.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
@@ -275,7 +310,7 @@ custom_fonts/font = SubResource( 32 )
 text = "ALIGN"
 clip_text = true
 
-[node name="BtnEnableStarter" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
+[node name="BtnEnableStarterGrande" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
 margin_top = 64.0
 margin_right = 189.0
 margin_bottom = 124.0
@@ -283,7 +318,7 @@ rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 33 )
 text = "ENABLE STARTER"
 
-[node name="BtnDisableStarter" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
+[node name="BtnDisableStarterGrande" type="Button" parent="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer"]
 margin_top = 128.0
 margin_right = 189.0
 margin_bottom = 178.0
@@ -291,36 +326,36 @@ rect_min_size = Vector2( 0, 50 )
 custom_fonts/font = SubResource( 33 )
 text = "DISABLE STARTER"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer"]
-anchor_left = 0.01
-anchor_top = 1.0
-anchor_right = 0.99
+[node name="BottomBar" type="Panel" parent="CanvasLayer/GUIContainer"]
+anchor_top = 0.842
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -95.0
-margin_bottom = -25.0
-alignment = 1
-
-[node name="BottomBar" type="Panel" parent="CanvasLayer/GUIContainer/VBoxContainer"]
-margin_right = 1003.0
-margin_bottom = 100.0
+margin_left = 10.24
+margin_top = 9.79996
+margin_right = -10.76
+margin_bottom = 15.0
 rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource( 2 )
 custom_styles/panel = SubResource( 19 )
 
-[node name="LeftPanel" type="Panel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="LeftPanel" type="Panel" parent="CanvasLayer/GUIContainer/BottomBar"]
 anchor_left = -0.01
-anchor_top = 0.941
+anchor_top = 0.831
 anchor_right = -0.01
-anchor_bottom = 0.941
+anchor_bottom = 0.831
 margin_left = 18.53
-margin_top = -86.1
+margin_top = 22.9
 margin_right = 368.53
-margin_bottom = 213.9
+margin_bottom = 322.9
 rect_min_size = Vector2( 350, 300 )
 rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_styles/panel = SubResource( 20 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 15.0
@@ -329,14 +364,14 @@ margin_right = -15.0
 margin_bottom = -15.0
 rect_clip_content = true
 
-[node name="Title" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="Title" type="Label" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_right = 320.0
 margin_bottom = 15.0
 custom_fonts/font = ExtResource( 4 )
 text = "Connecting to the Piccolo (192.168.70.110)"
 align = 1
 
-[node name="ChangeIpPiccolo" type="Button" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="ChangeIpPiccolo" type="Button" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_top = 19.0
 margin_right = 320.0
 margin_bottom = 59.0
@@ -344,12 +379,12 @@ rect_min_size = Vector2( 0, 40 )
 custom_fonts/font = ExtResource( 4 )
 text = "Change IP Address"
 
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_top = 63.0
 margin_right = 320.0
 margin_bottom = 67.0
 
-[node name="Position" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="Position" type="Label" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_top = 71.0
 margin_right = 320.0
 margin_bottom = 104.0
@@ -358,19 +393,19 @@ text = "Position
 (X: 0, Y: 0)"
 align = 1
 
-[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_top = 108.0
 margin_right = 320.0
 margin_bottom = 112.0
 
-[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_top = 116.0
 margin_right = 320.0
 margin_bottom = 131.0
 custom_fonts/font = ExtResource( 4 )
 text = "Battery:"
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer"]
 margin_top = 135.0
 margin_right = 320.0
 margin_bottom = 160.0
@@ -380,30 +415,27 @@ step = 1.0
 value = 50.0
 rounded = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel"]
-root_node = NodePath("../../../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel"]
+root_node = NodePath("../../../..")
 autoplay = "PanelLeftPreOpen"
 anims/OpenPanelLeft = SubResource( 24 )
 anims/PanelLeftPreOpen = SubResource( 21 )
 anims/RESET = SubResource( 22 )
 
-[node name="RightPanel" type="Panel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="RightPanel" type="Panel" parent="CanvasLayer/GUIContainer/BottomBar"]
 anchor_left = 1.011
-anchor_top = 0.95
+anchor_top = 0.84
 anchor_right = 1.011
-anchor_bottom = 0.95
-margin_left = -375.533
-margin_top = 20.0
-margin_right = -25.533
-margin_bottom = 320.0
+anchor_bottom = 0.84
+margin_left = -369.533
+margin_top = 22.0
+margin_right = -19.533
+margin_bottom = 322.0
 rect_min_size = Vector2( 350, 300 )
 rect_clip_content = true
 custom_styles/panel = SubResource( 20 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 15.0
@@ -411,14 +443,14 @@ margin_top = 15.0
 margin_right = -15.0
 margin_bottom = -15.0
 
-[node name="Title" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="Title" type="Label" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_right = 320.0
 margin_bottom = 15.0
 custom_fonts/font = ExtResource( 4 )
 text = "Connecting to the Grande (192.168.70.110)"
 align = 1
 
-[node name="ChangeIpGrande" type="Button" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="ChangeIpGrande" type="Button" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_top = 19.0
 margin_right = 320.0
 margin_bottom = 59.0
@@ -426,12 +458,12 @@ rect_min_size = Vector2( 0, 40 )
 custom_fonts/font = ExtResource( 4 )
 text = "Change IP Address"
 
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_top = 63.0
 margin_right = 320.0
 margin_bottom = 67.0
 
-[node name="Position" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="Position" type="Label" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_top = 71.0
 margin_right = 320.0
 margin_bottom = 104.0
@@ -440,19 +472,19 @@ text = "Position
 (X: 0, Y: 0)"
 align = 1
 
-[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_top = 108.0
 margin_right = 320.0
 margin_bottom = 112.0
 
-[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_top = 116.0
 margin_right = 320.0
 margin_bottom = 131.0
 custom_fonts/font = ExtResource( 4 )
 text = "Battery:"
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer"]
 margin_top = 135.0
 margin_right = 320.0
 margin_bottom = 160.0
@@ -462,60 +494,67 @@ step = 1.0
 value = 50.0
 rounded = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel"]
-root_node = NodePath("../../../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/BottomBar/RightPanel"]
+root_node = NodePath("../../../..")
 autoplay = "PanelRightPreOpen"
 anims/OpenPanelRight = SubResource( 25 )
-anims/PanelLeftPreOpen = SubResource( 26 )
 anims/PanelRightPreOpen = SubResource( 27 )
 anims/RESET = SubResource( 28 )
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GUIContainer/BottomBar"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -64.0
-margin_top = -177.0
+margin_top = -187.0
 margin_right = 78.0
-margin_bottom = -38.0
+margin_bottom = -48.0
 rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource( 5 )
 expand = true
 
-[node name="BtnChangeColor" type="Button" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="BtnChangeColor" type="Button" parent="CanvasLayer/GUIContainer/BottomBar"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -100.0
-margin_top = -73.0
+margin_top = -83.0
 margin_right = 100.0
-margin_bottom = 7.0
-rect_min_size = Vector2( 200, 80 )
+margin_bottom = -8.0
+rect_min_size = Vector2( 200, 60 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = ExtResource( 4 )
 text = "Change Team Color"
 
-[node name="TeamColorLabel" type="RichTextLabel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="TeamColorLabel" type="RichTextLabel" parent="CanvasLayer/GUIContainer/BottomBar"]
 anchor_left = 0.403
 anchor_right = 0.403
 margin_left = -194.209
 margin_top = -73.0
 margin_right = -0.209015
 margin_bottom = -49.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/normal_font = SubResource( 30 )
 bbcode_enabled = true
 bbcode_text = "[center]Team Color: [color=yellow]Yellow[/color][/center]"
 text = "Team Color: Yellow"
 scroll_active = false
 
-[node name="TeamColorLabel2" type="RichTextLabel" parent="CanvasLayer/GUIContainer/VBoxContainer/BottomBar"]
+[node name="TeamColorLabel2" type="RichTextLabel" parent="CanvasLayer/GUIContainer/BottomBar"]
 anchor_left = 0.598
 anchor_right = 0.598
 margin_left = -5.79407
 margin_top = -73.0
 margin_right = 188.206
 margin_bottom = -49.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/normal_font = SubResource( 30 )
 bbcode_enabled = true
 bbcode_text = "[center]Team Color: [color=purple]Purple[/color][/center]"
@@ -628,7 +667,12 @@ custom_fonts/font = ExtResource( 4 )
 text = "Save"
 
 [connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnAlignPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnAlignPiccolo_pressed"]
-[connection signal="pressed" from="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo" to="CanvasLayer/GUIContainer" method="_on_ChangeIpPiccolo_pressed"]
-[connection signal="pressed" from="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande" to="CanvasLayer/GUIContainer" method="_on_ChangeIpGrande_pressed"]
-[connection signal="pressed" from="CanvasLayer/GUIContainer/VBoxContainer/BottomBar/BtnChangeColor" to="CanvasLayer/GUIContainer" method="_on_BtnChangeColor_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnEnableStarterPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnEnableStarterPiccolo_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnDisableStarterPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnDisableStarterPiccolo_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer/BtnAlignGrande" to="CanvasLayer/GUIContainer" method="_on_BtnAlignGrande_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer/BtnEnableStarterGrande" to="CanvasLayer/GUIContainer" method="_on_BtnEnableStarterGrande_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer/BtnDisableStarterGrande" to="CanvasLayer/GUIContainer" method="_on_BtnDisableStarterGrande_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo" to="CanvasLayer/GUIContainer" method="_on_ChangeIpPiccolo_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande" to="CanvasLayer/GUIContainer" method="_on_ChangeIpGrande_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/BottomBar/BtnChangeColor" to="CanvasLayer/GUIContainer" method="_on_BtnChangeColor_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUIContainer/ChangeIPView/Panel/VBoxContainer/HBoxContainer/SaveIpButton" to="CanvasLayer/GUIContainer" method="_on_SaveIpButton_pressed"]

@@ -3,18 +3,18 @@ extends Control
 
 var teamColor = "yellow"
 var changeIp = "piccolo"
-var IP_PICCOLO = "192.168.70.20"
-var IP_GRANDE = "192.168.70.110"
+var IP_PICCOLO = "192.168.1.102"
+var IP_GRANDE = "192.168.1.101"
 
 #labels
-onready var labelTeam1 :RichTextLabel= $VBoxContainer/BottomBar/TeamColorLabel
-onready var labelTeam2 :RichTextLabel = $VBoxContainer/BottomBar/TeamColorLabel2
+onready var labelTeam1 :RichTextLabel= $BottomBar/TeamColorLabel
+onready var labelTeam2 :RichTextLabel = $BottomBar/TeamColorLabel2
 
-onready var labelRobotPiccolo = $VBoxContainer/BottomBar/LeftPanel/VBoxContainer/Title
-onready var labelRobotGrande = $VBoxContainer/BottomBar/RightPanel/VBoxContainer/Title
+onready var labelRobotPiccolo = $BottomBar/LeftPanel/VBoxContainer/Title
+onready var labelRobotGrande = $BottomBar/RightPanel/VBoxContainer/Title
 
-onready var labelPositionPiccolo = $VBoxContainer/BottomBar/LeftPanel/VBoxContainer/Position
-onready var labelPositionGrande = $VBoxContainer/BottomBar/RightPanel/VBoxContainer/Position
+onready var labelPositionPiccolo = $BottomBar/LeftPanel/VBoxContainer/Position
+onready var labelPositionGrande = $BottomBar/RightPanel/VBoxContainer/Position
 
 #changeIpWindow
 onready var changeIpWindow = $ChangeIPView
@@ -64,16 +64,16 @@ func _process(delta):
 	
 	
 	robotPiccolo.rect_rotation = lerp(robotPiccolo.rect_rotation , posPiccolo.z, delta)
-	robotPiccolo.rect_position = robotPiccolo.rect_position.linear_interpolate(Vector2(posPiccolo.x, posPiccolo.y), .5)
+	robotPiccolo.rect_position = robotPiccolo.rect_position.linear_interpolate(Vector2(posPiccolo.x - (robotPiccolo.rect_size.x *.5), posPiccolo.y - (robotPiccolo.rect_size.y *.5)), .5)
 	robotGrande.rect_rotation = lerp(robotGrande.rect_rotation , posGrande.z, delta)
-	robotGrande.rect_position = robotGrande.rect_position.linear_interpolate(Vector2(posGrande.x, posGrande.y), .5)
+	robotGrande.rect_position = robotGrande.rect_position.linear_interpolate(Vector2(posGrande.x -(robotGrande.rect_size.x * .5), posGrande.y -(robotGrande.rect_size.y * .5)), .5)
 
 
 
 func connectSocketPiccolo(port=null):
 	
 	wsPiccolo = WebSocketClient.new()
-	wsPiccolo.set_verify_ssl_enabled(false)
+	wsPiccolo.verify_ssl = false
 	wsPiccolo.connect("connection_closed", self, "_wsPiccoloClosed")
 	wsPiccolo.connect("connection_error", self, "_wsPiccoloClosed")
 	wsPiccolo.connect("connection_established", self, "_wsPiccoloConnected")
@@ -97,9 +97,9 @@ func _wsPiccoloClosed(was_clean = false):
 	wsPiccolo = null
 	labelRobotPiccolo.text="Connecting to Piccolo ("+IP_PICCOLO+")"
 	if wsPiccoloConnected:
-		$VBoxContainer/BottomBar/LeftPanel/AnimationPlayer.play("PanelLeftPreOpen")
+		$BottomBar/LeftPanel/AnimationPlayer.play_backwards("OpenPanelLeft")
 	wsPiccoloConnected = false
-	$VBoxContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo.visible = true
+	$BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo.visible = true
 	$LeftSide.visible = false
 	robotPiccolo.visible = false
 	yield(get_tree().create_timer(1.5), "timeout")
@@ -109,10 +109,10 @@ func _wsPiccoloConnected(proto = ""):
 	wsPiccoloConnected = true
 	labelRobotPiccolo.text="Piccolo Connected ("+IP_PICCOLO+")"
 	robotPiccolo.visible = true
-	$VBoxContainer/BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo.visible = false
+	$BottomBar/LeftPanel/VBoxContainer/ChangeIpPiccolo.visible = false
 	$LeftSide.visible = true
 	
-	$VBoxContainer/BottomBar/LeftPanel/AnimationPlayer.play("OpenPanelLeft")
+	$BottomBar/LeftPanel/AnimationPlayer.play("OpenPanelLeft")
 	wsPiccolo.get_peer(1).put_packet("Test packet".to_utf8())
 
 func _wsPiccoloOnData():
@@ -133,7 +133,7 @@ func _wsPiccoloOnData():
 func connectSocketGrande(port=null):
 	
 	wsGrande = WebSocketClient.new()
-	wsGrande.set_verify_ssl_enabled(false)
+	wsGrande.verify_ssl = false
 	wsGrande.connect("connection_closed", self, "_wsGrandeClosed")
 	wsGrande.connect("connection_error", self, "_wsGrandeClosed")
 	wsGrande.connect("connection_established", self, "_wsGrandeConnected")
@@ -156,9 +156,9 @@ func _wsGrandeClosed(was_clean = false):
 	wsGrande = null
 	labelRobotGrande.text="Connecting to Grande ("+IP_GRANDE+")"
 	if wsGrandeConnected:
-		$VBoxContainer/BottomBar/RightPanel/AnimationPlayer.play("PanelRightPreOpen")
+		$BottomBar/RightPanel/AnimationPlayer.play_backwards("OpenPanelRight")
 	wsGrandeConnected = false
-	$VBoxContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = true
+	$BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = true
 	$RightSide.visible = false
 	robotGrande.visible = false
 	yield(get_tree().create_timer(1.5), "timeout")
@@ -168,9 +168,9 @@ func _wsGrandeConnected(proto = ""):
 	wsGrandeConnected = true
 	labelRobotGrande.text="Grande Connected ("+IP_GRANDE+")"
 	robotGrande.visible = true
-	$VBoxContainer/BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = false
+	$BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = false
 	$RightSide.visible = true
-	$VBoxContainer/BottomBar/RightPanel/AnimationPlayer.play("OpenPanelRight")
+	$BottomBar/RightPanel/AnimationPlayer.play("OpenPanelRight")
 	wsGrande.get_peer(1).put_packet("Test packet".to_utf8())
 
 func _wsGrandeOnData():
@@ -235,3 +235,49 @@ func _on_BtnAlignPiccolo_pressed():
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
+
+
+func _on_BtnEnableStarterPiccolo_pressed():
+		
+	var body = {"enable" : true}
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+
+
+func _on_BtnDisableStarterPiccolo_pressed():
+	var body = {"enable" : false}
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+
+
+func _on_BtnAlignGrande_pressed():
+	var body = {"color" : 1 if teamColor == "yellow" else 0}
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portPiccolo)+"/api/robot/st/align", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+
+
+func _on_BtnEnableStarterGrande_pressed():
+	var body = {"enable" : true}
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+
+
+func _on_BtnDisableStarterGrande_pressed():
+	var body = {"enable" : false}
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
