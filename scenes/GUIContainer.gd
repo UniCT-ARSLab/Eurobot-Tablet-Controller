@@ -40,6 +40,9 @@ var scalePosition = .2
 var posPiccolo = Vector3()
 var posGrande = Vector3()
 
+var batteryPiccoloTimer : Timer
+var batteryGrandeTimer : Timer
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	labelTeam1.set_bbcode("[center]Team Color: [color="+teamColor+"]"+teamColor.capitalize()+"[/color][/center]")
@@ -51,6 +54,16 @@ func _ready():
 	changeIpWindow.visible = false
 	robotPiccolo.visible = false
 	robotGrande.visible = false
+	
+	batteryPiccoloTimer = Timer.new()
+	batteryGrandeTimer = Timer.new()
+	
+	batteryPiccoloTimer.connect("timeout", self, "_reqBatteryPiccolo")
+	batteryPiccoloTimer.connect("timeout", self, "_reqBatteryGrande")
+	add_child(batteryPiccoloTimer)
+	add_child(batteryGrandeTimer)
+	
+
 	
 	connectSocketPiccolo()
 	connectSocketGrande()
@@ -103,6 +116,7 @@ func _wsPiccoloClosed(was_clean = false):
 	$LeftSide.visible = false
 	robotPiccolo.visible = false
 	yield(get_tree().create_timer(1.5), "timeout")
+	batteryPiccoloTimer.stop()
 	connectSocketPiccolo()
 
 func _wsPiccoloConnected(proto = ""):
@@ -113,6 +127,7 @@ func _wsPiccoloConnected(proto = ""):
 	$LeftSide.visible = true
 	
 	$BottomBar/LeftPanel/AnimationPlayer.play("OpenPanelLeft")
+	batteryPiccoloTimer.start(5)
 	wsPiccolo.get_peer(1).put_packet("Test packet".to_utf8())
 
 func _wsPiccoloOnData():
@@ -129,6 +144,32 @@ func _wsPiccoloOnData():
 		elif jsonData["command"] == "battery":
 			print("Aggiorno batteria");
 			#batteryBar.set_bar_value(int(jsonData["data"]["percent"]))
+func _reqBatteryPiccolo():
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.connect("request_completed", self, "_onBatteryPiccoloData")
+	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/battery", ["Content-Type:application/json"], false, HTTPClient.METHOD_GET)
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+
+func _onBatteryPiccoloData(result, response_code, headers, body):
+	var percBattery = parse_json(body.get_string_from_utf8())
+	if percBattery :
+		updatePiccoloBatteryBar(percBattery)
+	
+func updatePiccoloBatteryBar(perc):
+	var val = int(perc*100)
+	var elem = $BottomBar/LeftPanel/VBoxContainer/ProgressBar
+	elem.value = val
+	
+	if val > 60:
+		elem.get("custom_styles/fg").bg_color=Color("009a05")
+	elif val > 20 and val < 59:
+		elem.get("custom_styles/fg").bg_color=Color("c8c100")
+	else:
+		elem.get("custom_styles/fg").bg_color=Color("c80000")
+	
+
 
 func connectSocketGrande(port=null):
 	
@@ -162,7 +203,7 @@ func _wsGrandeClosed(was_clean = false):
 	$RightSide.visible = false
 	robotGrande.visible = false
 	yield(get_tree().create_timer(1.5), "timeout")
-	connectSocketPiccolo()
+	connectSocketGrande()
 
 func _wsGrandeConnected(proto = ""):
 	wsGrandeConnected = true
@@ -190,6 +231,32 @@ func _wsGrandeOnData():
 			print("Aggiorno batteria");
 			#batteryBar.set_bar_value(int(jsonData["data"]["percent"]))
 
+func _reqBatteryGrande():
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.connect("request_completed", self, "_onBatteryGrandeData")
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/battery", ["Content-Type:application/json"], false, HTTPClient.METHOD_GET)
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+		
+func _onBatteryGrandeData(result, response_code, headers, body):
+	var percBattery = parse_json(body.get_string_from_utf8())
+	print(percBattery)
+	if percBattery:
+		updateGrandeBatteryBar(percBattery)
+
+func updateGrandeBatteryBar(perc):
+	print(perc)
+	var val = int(perc*100)
+	var elem = $BottomBar/RightPanel/VBoxContainer/ProgressBar
+	elem.value = val
+	
+	if val > 60:
+		elem.get("custom_styles/fg").bg_color=Color("009a05")
+	elif val > 20 and val < 59:
+		elem.get("custom_styles/fg").bg_color=Color("c8c100")
+	else:
+		elem.get("custom_styles/fg").bg_color=Color("c80000")
 
 func _on_BtnChangeColor_pressed():
 	teamColor = "yellow" if teamColor == "purple" else "purple"
@@ -237,6 +304,7 @@ func _on_BtnAlignPiccolo_pressed():
 
 
 
+
 func _on_BtnEnableStarterPiccolo_pressed():
 		
 	var body = {"enable" : true}
@@ -245,6 +313,7 @@ func _on_BtnEnableStarterPiccolo_pressed():
 	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
+
 
 
 func _on_BtnDisableStarterPiccolo_pressed():
@@ -256,28 +325,42 @@ func _on_BtnDisableStarterPiccolo_pressed():
 		push_error("An error occurred in the HTTP request.")
 
 
+
 func _on_BtnAlignGrande_pressed():
 	var body = {"color" : 1 if teamColor == "yellow" else 0}
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	var error = http_request.request("http://"+IP_GRANDE+":"+str(portPiccolo)+"/api/robot/st/align", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/st/align", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
+
 
 
 func _on_BtnEnableStarterGrande_pressed():
 	var body = {"enable" : true}
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	var error = http_request.request("http://"+IP_GRANDE+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
+
 
 
 func _on_BtnDisableStarterGrande_pressed():
 	var body = {"enable" : false}
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	var error = http_request.request("http://"+IP_GRANDE+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
+	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
+
+
+
+func _on_BtnResetPiccolo_pressed():
+	print("test")
+	var dialog = AcceptDialog.new()
+	dialog.dialog_text = "Do you want reset the board?"
+	dialog.visible = true
+	dialog.show_on_top = true
+	add_child(dialog)
+	pass # Replace with function body.

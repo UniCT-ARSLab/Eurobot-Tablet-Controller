@@ -224,7 +224,6 @@ anchor_bottom = 1.0
 color = Color( 0.0745098, 0.0313726, 0.231373, 1 )
 
 [node name="LeftSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
-visible = false
 anchor_bottom = 0.734
 margin_top = 13.0
 margin_right = 199.0
@@ -274,8 +273,15 @@ rect_min_size = Vector2( 0, 50 )
 custom_fonts/font = SubResource( 33 )
 text = "DISABLE STARTER"
 
+[node name="BtnResetPiccolo" type="Button" parent="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer"]
+margin_top = 182.0
+margin_right = 189.0
+margin_bottom = 232.0
+rect_min_size = Vector2( 0, 50 )
+custom_fonts/font = SubResource( 33 )
+text = "RESET BOARD"
+
 [node name="RightSide" type="HBoxContainer" parent="CanvasLayer/GUIContainer"]
-visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -199.0
@@ -412,7 +418,7 @@ margin_bottom = 160.0
 custom_fonts/font = ExtResource( 4 )
 custom_styles/fg = SubResource( 23 )
 step = 1.0
-value = 50.0
+value = 100.0
 rounded = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUIContainer/BottomBar/LeftPanel"]
@@ -669,6 +675,7 @@ text = "Save"
 [connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnAlignPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnAlignPiccolo_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnEnableStarterPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnEnableStarterPiccolo_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnDisableStarterPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnDisableStarterPiccolo_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUIContainer/LeftSide/SideBar/VBoxContainer/BtnResetPiccolo" to="CanvasLayer/GUIContainer" method="_on_BtnResetPiccolo_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer/BtnAlignGrande" to="CanvasLayer/GUIContainer" method="_on_BtnAlignGrande_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer/BtnEnableStarterGrande" to="CanvasLayer/GUIContainer" method="_on_BtnEnableStarterGrande_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUIContainer/RightSide/SideBar/VBoxContainer/BtnDisableStarterGrande" to="CanvasLayer/GUIContainer" method="_on_BtnDisableStarterGrande_pressed"]
