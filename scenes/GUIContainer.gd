@@ -43,6 +43,8 @@ var posGrande = Vector3()
 var batteryPiccoloTimer : Timer
 var batteryGrandeTimer : Timer
 
+var popupLoading : ConfirmationDialog
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	labelTeam1.set_bbcode("[center]Team Color: [color="+teamColor+"]"+teamColor.capitalize()+"[/color][/center]")
@@ -59,9 +61,18 @@ func _ready():
 	batteryGrandeTimer = Timer.new()
 	
 	batteryPiccoloTimer.connect("timeout", self, "_reqBatteryPiccolo")
-	batteryPiccoloTimer.connect("timeout", self, "_reqBatteryGrande")
+	batteryGrandeTimer.connect("timeout", self, "_reqBatteryGrande")
 	add_child(batteryPiccoloTimer)
 	add_child(batteryGrandeTimer)
+	
+	popupLoading = ConfirmationDialog.new()
+	popupLoading.connect("about_to_show", self, "_on_popup_show")
+	popupLoading.connect("hide", self, "_on_popup_hide")
+	popupLoading.get_close_button().hide()
+	popupLoading.get_cancel().hide()
+	popupLoading.get_ok().hide()
+	popupLoading.show_on_top = true
+	add_child(popupLoading)
 	
 
 	
@@ -78,7 +89,7 @@ func _process(delta):
 	
 	robotPiccolo.rect_rotation = lerp(robotPiccolo.rect_rotation , posPiccolo.z, delta)
 	robotPiccolo.rect_position = robotPiccolo.rect_position.linear_interpolate(Vector2(posPiccolo.x - (robotPiccolo.rect_size.x *.5), posPiccolo.y - (robotPiccolo.rect_size.y *.5)), .5)
-	robotGrande.rect_rotation = lerp(robotGrande.rect_rotation , posGrande.z, delta)
+	robotGrande.rect_rotation = lerp(robotGrande.rect_rotation , posGrande.z, delta*100)
 	robotGrande.rect_position = robotGrande.rect_position.linear_interpolate(Vector2(posGrande.x -(robotGrande.rect_size.x * .5), posGrande.y -(robotGrande.rect_size.y * .5)), .5)
 
 
@@ -127,7 +138,7 @@ func _wsPiccoloConnected(proto = ""):
 	$LeftSide.visible = true
 	
 	$BottomBar/LeftPanel/AnimationPlayer.play("OpenPanelLeft")
-	batteryPiccoloTimer.start(5)
+	batteryPiccoloTimer.start(3)
 	wsPiccolo.get_peer(1).put_packet("Test packet".to_utf8())
 
 func _wsPiccoloOnData():
@@ -139,7 +150,7 @@ func _wsPiccoloOnData():
 			posPiccolo.z = abs(jsonData["data"]["Angle"] - 180)
 			posPiccolo.x = jsonData["data"]["X"] * scalePosition
 			posPiccolo.y = 400 - (jsonData["data"]["Y"] * scalePosition)
-			labelPositionPiccolo.text="Position:\n (X:"+str(posPiccolo.x)+", Y:"+str(posPiccolo.y)+", A:"+str(posPiccolo.z)+")"
+			labelPositionPiccolo.text="Position:\n (X:"+str(jsonData["data"]["X"])+", Y:"+str(jsonData["data"]["Y"])+", A:"+str(jsonData["data"]["Angle"])+")"
 			
 		elif jsonData["command"] == "battery":
 			print("Aggiorno batteria");
@@ -153,8 +164,9 @@ func _reqBatteryPiccolo():
 		push_error("An error occurred in the HTTP request.")
 
 func _onBatteryPiccoloData(result, response_code, headers, body):
+	
 	var percBattery = parse_json(body.get_string_from_utf8())
-	if percBattery :
+	if percBattery != null:
 		updatePiccoloBatteryBar(percBattery)
 	
 func updatePiccoloBatteryBar(perc):
@@ -169,14 +181,12 @@ func updatePiccoloBatteryBar(perc):
 	else:
 		elem.get("custom_styles/fg").bg_color=Color("c80000")
 	
-
-
 func connectSocketGrande(port=null):
 	
 	wsGrande = WebSocketClient.new()
 	wsGrande.verify_ssl = false
-	wsGrande.connect("connection_closed", self, "_wsGrandeClosed")
-	wsGrande.connect("connection_error", self, "_wsGrandeClosed")
+	wsGrande.connect("connection_closed", self, "_wsGrandeClosed", [], CONNECT_DEFERRED)
+	wsGrande.connect("connection_error", self, "_wsGrandeClosed", [], CONNECT_DEFERRED)
 	wsGrande.connect("connection_established", self, "_wsGrandeConnected")
 	wsGrande.connect("data_received", self, "_wsGrandeOnData")
 	
@@ -202,6 +212,7 @@ func _wsGrandeClosed(was_clean = false):
 	$BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = true
 	$RightSide.visible = false
 	robotGrande.visible = false
+	batteryGrandeTimer.stop()
 	yield(get_tree().create_timer(1.5), "timeout")
 	connectSocketGrande()
 
@@ -212,6 +223,7 @@ func _wsGrandeConnected(proto = ""):
 	$BottomBar/RightPanel/VBoxContainer/ChangeIpGrande.visible = false
 	$RightSide.visible = true
 	$BottomBar/RightPanel/AnimationPlayer.play("OpenPanelRight")
+	batteryGrandeTimer.start(3)
 	wsGrande.get_peer(1).put_packet("Test packet".to_utf8())
 
 func _wsGrandeOnData():
@@ -221,11 +233,11 @@ func _wsGrandeOnData():
 		var jsonData = jsonResult.result
 		if  jsonData["command"] == "position":
 			
-			posGrande.z = abs(jsonData["data"]["Angle"] - 180)
+			posGrande.z = abs(jsonData["data"]["Angle"])
 			posGrande.x = jsonData["data"]["X"] * scalePosition
 			posGrande.y = 400 - (jsonData["data"]["Y"] * scalePosition)
 			
-			labelPositionGrande.text="Position:\n (X:"+str(posGrande.x)+", Y:"+str(posGrande.y)+", A:"+str(posGrande.z)+")"
+			labelPositionGrande.text="Position:\n (X:"+str(jsonData["data"]["X"])+", Y:"+str(jsonData["data"]["Y"])+", A:"+str(jsonData["data"]["Angle"])+")"
 			
 		elif jsonData["command"] == "battery":
 			print("Aggiorno batteria");
@@ -241,12 +253,10 @@ func _reqBatteryGrande():
 		
 func _onBatteryGrandeData(result, response_code, headers, body):
 	var percBattery = parse_json(body.get_string_from_utf8())
-	print(percBattery)
-	if percBattery:
+	if percBattery != null:
 		updateGrandeBatteryBar(percBattery)
 
 func updateGrandeBatteryBar(perc):
-	print(perc)
 	var val = int(perc*100)
 	var elem = $BottomBar/RightPanel/VBoxContainer/ProgressBar
 	elem.value = val
@@ -263,20 +273,17 @@ func _on_BtnChangeColor_pressed():
 	labelTeam1.set_bbcode("[center]Team Color: [color="+teamColor+"]"+teamColor.capitalize()+"[/color][/center]")
 	labelTeam2.set_bbcode("[center]Team Color: [color="+teamColor+"]"+teamColor.capitalize()+"[/color][/center]")
 
-
 func _on_ChangeIpPiccolo_pressed():
 	changeIp = "piccolo"
 	inputIp.text = IP_PICCOLO
 	changeIpWindow.visible = true
 	pass # Replace with function body.
 
-
 func _on_ChangeIpGrande_pressed():
 	changeIp = "grande"
 	inputIp.text = IP_GRANDE
 	changeIpWindow.visible = true
 	pass # Replace with function body.
-
 
 func _on_SaveIpButton_pressed():
 	if inputIp.text == "":
@@ -292,75 +299,99 @@ func _on_SaveIpButton_pressed():
 		connectSocketGrande()
 	changeIpWindow.visible = false
 
-
 func _on_BtnAlignPiccolo_pressed():
 	
 	var body = {"color" : 1 if teamColor == "yellow" else 0}
+	
+
+	popupLoading.dialog_text = "Loading, Align Piccolo"
+	popupLoading.popup_centered()
+	popupLoading.show()
+	
 	var http_request = HTTPRequest.new()
+	http_request.timeout = 10
+	http_request.connect("request_completed", self, "on_http_finished")
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/align", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
-
-
-
 func _on_BtnEnableStarterPiccolo_pressed():
 		
 	var body = {"enable" : true}
 	var http_request = HTTPRequest.new()
+	popupLoading.dialog_text = "Loading, Enable Start Piccolo"
+	popupLoading.popup_centered()
+	popupLoading.show()
+	http_request.connect("request_completed", self, "on_http_finished")
+	
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
-
-
 
 func _on_BtnDisableStarterPiccolo_pressed():
 	var body = {"enable" : false}
 	var http_request = HTTPRequest.new()
+	popupLoading.dialog_text = "Loading, Disable Start Piccolo"
+	popupLoading.popup_centered()
+	popupLoading.show()
+	http_request.connect("request_completed", self, "on_http_finished")
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_PICCOLO+":"+str(portPiccolo)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
-
-
 func _on_BtnAlignGrande_pressed():
 	var body = {"color" : 1 if teamColor == "yellow" else 0}
 	var http_request = HTTPRequest.new()
+	popupLoading.dialog_text = "Loading, Align Grande"
+	popupLoading.popup_centered()
+	popupLoading.show()
+	http_request.connect("request_completed", self, "on_http_finished")
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/st/align", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
-
-
 func _on_BtnEnableStarterGrande_pressed():
 	var body = {"enable" : true}
 	var http_request = HTTPRequest.new()
+	popupLoading.dialog_text = "Loading, Enable Start Grande"
+	popupLoading.popup_centered()
+	popupLoading.show()
+	http_request.connect("request_completed", self, "on_http_finished")
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
-
-
 
 func _on_BtnDisableStarterGrande_pressed():
 	var body = {"enable" : false}
 	var http_request = HTTPRequest.new()
+	popupLoading.dialog_text = "Loading, Disable Start Grande"
+	popupLoading.popup_centered()
+	popupLoading.show()
+	http_request.connect("request_completed", self, "on_http_finished")
 	add_child(http_request)
 	var error = http_request.request("http://"+IP_GRANDE+":"+str(portGrande)+"/api/robot/st/starter", ["Content-Type:application/json"], false, HTTPClient.METHOD_POST, JSON.print(body))
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
-
-
 func _on_BtnResetPiccolo_pressed():
-	print("test")
-	var dialog = AcceptDialog.new()
+	var dialog = ConfirmationDialog.new()
+	dialog.connect("about_to_show", self, "_on_popup_show")
+	dialog.connect("hide", self, "_on_popup_hide")
 	dialog.dialog_text = "Do you want reset the board?"
-	dialog.visible = true
-	dialog.show_on_top = true
 	add_child(dialog)
-	pass # Replace with function body.
+	dialog.popup_centered()
+	dialog.show()
+	
+func _on_popup_show():
+	$Backdrop.show()
+func _on_popup_hide():
+	$Backdrop.hide()
+
+func on_http_finished(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray):
+	print("fine")
+	popupLoading.hide()
